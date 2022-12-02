@@ -16,8 +16,19 @@ Node::Node(void) {
     v = 0.0;
     destination = NULL;
     source = NULL;
+    isTip = false;
+    isNewick = false;
+    isRescale = false;
+    isDistance = false;
+    myCognate = NULL;
+    offset = 0;
 }
 
+Node::~Node(void) {
+    if (myCognate != NULL)
+        delete myCognate;
+}
+ 
 /*double Node::getTotalBrLen(void) {
     
     Node* pAncs = ancestor;

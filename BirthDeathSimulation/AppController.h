@@ -17,19 +17,19 @@ NS_ASSUME_NONNULL_BEGIN
     // variables here
     Tree* tree;
     IBOutlet TreeView* treeview;
-    double speciationRate;
-    double extinctionRate;
+    double turnoverRate;
+    //double extinctionRate;
     double duration;
-    double sharingRate;
-    double alpha;
-    double beta;    
+
     CharMatrix* charMatrix;
 }
 
 // getters and setters
-@property (readwrite) double speciationRate;
-@property (readwrite) double extinctionRate;
+@property (readwrite) double turnoverRate;
+//@property (readwrite) double extinctionRate;
 @property (readwrite) double duration;
+
+
 - (IBAction)simulate:(id)sender;
 - (Tree*)getTree;
 

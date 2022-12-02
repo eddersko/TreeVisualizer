@@ -19,23 +19,22 @@ struct EKPoint {
 };
 
 class Node {
-  
+
+    
     public:
         Node(void);
+        ~Node(void);
         void addDescendant(Node* p) { descendants.insert(p); }
         void removeDescendant(Node* p) { descendants.erase(p); }
         void removeAllDescendants(void) { descendants.clear(); }
         int getNumDescendents(void) { return (int)descendants.size(); }
-        void setAncestor(Node* p) {ancestor = p; }
+        void setAncestor(Node* p) { ancestor = p; }
         Node* getAncestor(void) { return ancestor; }
         void setIndex(int i) {index = i;}
         int getIndex(void) {return index;}
         void setTime(double t) {time = t;}
         double getTime(void) {return time;}
         std::set<Node*>& getDescendants(void) {return descendants;}
-        void setYCoordinate(double y) {coordinate.y = y;}
-        void setXCoordinate(double x) {coordinate.x = x;}
-        EKPoint getCoordinates(void) {return coordinate;}
         void setName(std::string n) {name = n;}
         std::string getName(void) {return name;}
         void setBrLen(double brLen) {v = brLen;}
@@ -43,13 +42,25 @@ class Node {
         //double getTotalBrLen(void);
         int getState(void) {return state;}
         void setState(int s) {state = s;}
-        void setCognateSet(CognateSet* cs) { myCognate = cs; }        
+        void setCognateSet(CognateSet* cs) { myCognate = cs; }
         CognateSet* getCognateSet(void) { return myCognate; }
         void setSource(Node* s) { source = s; }
         Node* getSource(void) { return source; }
         void setDest(Node* d) { destination = d; }
         Node* getDest(void) { return destination; }
-    
+        void setIsTip(bool t) { isTip = t;}
+        bool getIsTip(void) {return isTip;}
+        void setNewick(bool t) {isNewick = t;}
+        bool getNewick(void) {return isNewick;}
+        void setRescale(bool t) { isRescale = t;}
+        bool getRescale(void) {return isRescale;}
+        void setIsDistance(bool t) { isDistance = t;}
+        bool getIsDistance(void) {return isDistance;}
+        int getOffset(void) {return offset;}
+        void setOffset(int o) { offset = o;}
+        void setYCoordinate(double y) {coordinate.y = y;}
+        void setXCoordinate(double x) {coordinate.x = x;}
+        EKPoint getCoordinates(void) {return coordinate;}
     private:
         std::set<Node*> descendants;
         Node* ancestor;
@@ -59,9 +70,14 @@ class Node {
         int index;
         double time;
         double v;
-        EKPoint coordinate;
         int state;
+        EKPoint coordinate;
         CognateSet* myCognate;
+        bool isTip;
+        bool isNewick;
+        bool isRescale;
+        bool isDistance;
+        int offset;
 };
 
 #endif /* Node_hpp */

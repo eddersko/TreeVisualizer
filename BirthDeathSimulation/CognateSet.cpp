@@ -41,6 +41,7 @@ CognateSet::CognateSet(const CognateSet& c) {
         cognates[i] = c.cognates[i];
 }
 
+
 // rate at which the cognate changes
 double CognateSet::calculateRate(double** q, int numStates) {
     
@@ -48,7 +49,7 @@ double CognateSet::calculateRate(double** q, int numStates) {
     
     for (int i = 0; i < numCognates; i++) {
         int s = cognates[i];
-        lambda += -q[s][s]; 
+        lambda += -q[s][s];
     }
     
     return lambda;
