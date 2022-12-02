@@ -43,6 +43,37 @@
                 [line lineToPoint:p2];
                 [line setLineWidth:1.0];
                 [line stroke];
+                
+                
+                // if source or dest not null
+                
+                if (p->getDest() != NULL) {
+                    double x2 = p->getDest()->getCoordinates().x * bounds.size.width;
+                    
+                    NSPoint p1 = NSMakePoint(x, y1);
+                    NSPoint p2 = NSMakePoint(x2, y1);
+                    [[NSColor redColor] set];
+                    NSBezierPath* line = [NSBezierPath bezierPath];
+                    [line moveToPoint:p1];
+                    [line lineToPoint:p2];
+                    [line setLineWidth:1.0];
+                    [line stroke];
+                    
+                }
+                
+               /* if (p->getSource() != NULL) {
+                    double x2 = p->getSource()->getCoordinates().x * bounds.size.width;
+                    
+                    NSPoint p1 = NSMakePoint(x, y1);
+                    NSPoint p2 = NSMakePoint(x2, y1);
+                    [[NSColor redColor] set];
+                    NSBezierPath* line = [NSBezierPath bezierPath];
+                    [line moveToPoint:p1];
+                    [line lineToPoint:p2];
+                    [line setLineWidth:1.0];
+                    [line stroke];
+                }*/
+                
             }
             
             std::set<Node*> pDescs = p->getDescendants();
