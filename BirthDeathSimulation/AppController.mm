@@ -13,18 +13,20 @@
 
 @implementation AppController;
 @synthesize turnoverRate;
-//@synthesize extinctionRate;
+@synthesize sharingRate;
 @synthesize duration;
 
 
 - (IBAction)simulate:(id)sender {
     
     NSLog(@"In simulate function.");
-    if (tree != NULL)
+    if (tree != NULL) {
         delete tree;
+        tree = NULL;
+    }
     
     double expectedNumberOfTips = 20.0;
-    double sharingRate = 1.0;
+    //double sharingRate = 1.0;
     double delta = 10.0;
     
     double diversificationRate = log(expectedNumberOfTips) - log(2);
@@ -32,15 +34,16 @@
     double speciationRate = extinctionRate + diversificationRate;
     
     // simulate new tree
-    tree = new Tree(speciationRate, extinctionRate, duration);
+    //tree = new Tree(speciationRate, extinctionRate, duration);
             
-    //while (tree == NULL) {
-    //    Tree* t = new Tree(speciationRate, extinctionRate, duration);
-    //   if (t->getNumTaxa() == (int)expectedNumberOfTips)
-    //        tree = t;
-    //    else
-    //        delete t;
-    //}
+    while (tree == NULL) {
+        Tree* t = new Tree(speciationRate, extinctionRate, duration);
+        if (t->getNumTaxa() == (int)expectedNumberOfTips) {
+            tree = t;
+            NSLog(@"Pass.");
+        } else
+            delete t;
+    }
     
     // tree with ghost lineages
     //tree = new Tree("(((A:0.1,B:0.1):0.1,E:0.1):0.1,(C:0.2,D:0.2):0.1);");
@@ -131,8 +134,8 @@
 // default values
 - (id)init {
     if (self = [super init]) {
-        [self setTurnoverRate:0.0];
-        //[self setExtinctionRate:0.1];
+        [self setTurnoverRate:0.2];
+        [self setSharingRate:0.2];
         [self setDuration:1.0];
 
     }

@@ -18,15 +18,16 @@ NS_ASSUME_NONNULL_BEGIN
     Tree* tree;
     IBOutlet TreeView* treeview;
     double turnoverRate;
-    //double extinctionRate;
+    double sharingRate;
     double duration;
 
     CharMatrix* charMatrix;
 }
 
 // getters and setters
+
 @property (readwrite) double turnoverRate;
-//@property (readwrite) double extinctionRate;
+@property (readwrite) double sharingRate;
 @property (readwrite) double duration;
 
 

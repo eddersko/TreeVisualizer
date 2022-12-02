@@ -59,6 +59,27 @@
                     [line setLineWidth:1.0];
                     [line stroke];
                     
+                    // draw arrowhead
+                    
+                    [line moveToPoint:p2];
+                    
+                    NSPoint p3;
+                    NSPoint p4;
+                    
+                    if (x2 > x) {
+                        p3 = NSMakePoint(x2 - (0.005*bounds.size.width), y1 - (0.005*bounds.size.height));
+                        p4 = NSMakePoint(x2 - (0.005*bounds.size.width), y1 + (0.005*bounds.size.height));
+                    } else {
+                        p3 = NSMakePoint(x2 + (0.005*bounds.size.width), y1 - (0.005*bounds.size.height));
+                        p4 = NSMakePoint(x2 + (0.005*bounds.size.width), y1 + (0.005*bounds.size.height));
+                    }
+                    
+                    [line moveToPoint:p2];
+                    [line lineToPoint:p3];
+                    [line stroke];
+                    [line moveToPoint:p2];
+                    [line lineToPoint:p4];
+                    [line stroke];
                 }
                 
                /* if (p->getSource() != NULL) {
