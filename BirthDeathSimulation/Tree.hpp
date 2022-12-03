@@ -28,6 +28,7 @@ public:
     std::vector<Node*>& getDownPassSequence(void) {return downPassSequence;}
     std::vector<Node*> nodesAtTime(double time);
     void addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>& sourceNodes, double delta);
+    void addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>& sourceNodes, double delta, double alphaTemp, double betaTemp);
     void addSharingEvents(RandomVariable* rng, Tree* t, double rate, std::vector<Node*>& sourceNodes);
     Node* getRoot(void) { return root; }
     int getNumTaxa(void) {return numTaxa;}

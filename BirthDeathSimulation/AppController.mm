@@ -26,8 +26,9 @@
     }
     
     double expectedNumberOfTips = 20.0;
-    //double sharingRate = 1.0;
+    sharingRate = 2.0;
     double delta = 10.0;
+    double epsilon = 10.0;
     
     double diversificationRate = log(expectedNumberOfTips) - log(2);
     double extinctionRate = diversificationRate * turnoverRate / (1.0 - turnoverRate);
@@ -124,7 +125,7 @@
     //double sharingRates = 0.0;
     
     // CharMatrix(Tree* t, double** q, int ns, double* freqs, int nc, RandomVariable* rng, double alpha, double beta, std::vector<double> sharingTimes)
-    charMatrix = new CharMatrix(tree, q, 2, freqs, 1000, 1.0, 1.0, 1.0, sharingRate, delta);
+    charMatrix = new CharMatrix(tree, q, 2, freqs, 1000, 1.0, 1.0, 1.0, sharingRate, delta, 1.0, 3.0);
                                 
                                 //&rng, 9.0, 1.0, sharingRates);
     //charMatrix->print();
