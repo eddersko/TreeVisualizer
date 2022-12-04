@@ -443,13 +443,13 @@ CharMatrix::CharMatrix(Tree* destTree, Tree* sourceTree, double** q, int ns, std
   episolon: likelihood of borrowing at deeper or shallower time depths
  */
  
-CharMatrix::CharMatrix(Tree* t, double** q, int ns, std::vector<double> freqs, int nc, double alphaRat, double alphaRes, double betaRes, double sharingRate, double delta, double alphaTemp, double betaTemp) {
+CharMatrix::CharMatrix(Tree* t, double** q, int ns, std::vector<double> freqs, int nc, double alphaRat, double alphaRes, double betaRes, double sharingRate, double delta, bool borrowNearTips) {
         
     RandomVariable& rng = RandomVariable::randomVariableInstance();
     
     // determine sharing events
     std::vector<Node*> sourceNodes;
-    t->addSharingEvents(&rng, sharingRate, sourceNodes, delta, alphaTemp, betaTemp);
+    t->addSharingEvents(&rng, sharingRate, sourceNodes, delta, borrowNearTips);
 
     // simulate data
     numStates = ns;

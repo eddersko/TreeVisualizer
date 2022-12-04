@@ -557,7 +557,7 @@ void Tree::addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>
 
 // temporally biased
 
-void Tree::addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>& sourceNodes, double delta, double alphaTemp, double betaTemp) {
+void Tree::addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>& sourceNodes, double delta, bool borrowNearTip) {
         
     // insert nodes into tree at source points
             
@@ -568,6 +568,7 @@ void Tree::addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>
         if (nAncs != NULL) {
             double v = nAncs->getTime();
             double len = n->getBrLen()+v;
+            double x;
             
             while (v < len) {
                 
@@ -575,13 +576,17 @@ void Tree::addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>
                 
                 v += -log(rng->uniformRv())/rate;
                 
-                double x = Probability::Beta::rv(rng, alphaTemp, betaTemp);
-            
+                if (borrowNearTip)
+                    x = v / time; // borrowing more likely near tip
+                else
+                    x = 1 - (v / time); // borrowing more likely near root
                 // if 1/(v/time)
                 
-                if (v < len && v < x) {
+                double y = rng->uniformRv();
+                                                
+                if (v < len && x > y) {
                     
-                    //std::cout << "v: " << v << ", time: " << time << ", x: " << x << std::endl;
+                    std::cout << "v: " << v << ", x: " << x << ", y: " << y << std::endl;
                                         
                     Node* p = addNode();
                     p->setTime(v);
