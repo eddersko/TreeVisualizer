@@ -124,7 +124,7 @@
     //double sharingRates = 0.0;
     
     // CharMatrix(Tree* t, double** q, int ns, double* freqs, int nc, RandomVariable* rng, double alpha, double beta, std::vector<double> sharingTimes)
-    charMatrix = new CharMatrix(tree, q, 2, freqs, 1000, 1.0, 1.0, 1.0, sharingRate, delta, false);
+    charMatrix = new CharMatrix(tree, q, 2, freqs, 1000, 1.0, 1.0, 1.0, sharingRate, delta);
                                 
                                 //&rng, 9.0, 1.0, sharingRates);
     //charMatrix->print();

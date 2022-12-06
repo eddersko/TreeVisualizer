@@ -37,11 +37,16 @@ bool compareTimes(Node* n1, Node* n2) {
  
 CharMatrix::CharMatrix(Tree* t, double** q, int ns, std::vector<double> freqs, int nc, double alphaRat, double alphaRes, double betaRes, double sharingRate, double delta) {
         
-    RandomVariable& rng = RandomVariable::randomVariableInstance();
     
+    double expectedNumChanges = 2.0;
+    double subtreeLength = t->rescale();
+    double rateFactor = expectedNumChanges/subtreeLength;
+    
+    RandomVariable& rng = RandomVariable::randomVariableInstance();
+        
     // determine sharing events
     std::vector<Node*> sourceNodes;
-    t->addSharingEvents(&rng, sharingRate, sourceNodes, delta);
+    t->addSharingEvents(&rng, sharingRate/subtreeLength, sourceNodes, delta);
 
     // simulate data
     numStates = ns;
@@ -77,7 +82,7 @@ CharMatrix::CharMatrix(Tree* t, double** q, int ns, std::vector<double> freqs, i
             for (int c = 0; c < numChar; c++) {
                 
                 int currState = (*p->getAncestor()->getCognateSet())[c];
-                double len = p->getTime() - p->getAncestor()->getTime();
+                double len = (p->getTime() - p->getAncestor()->getTime()) * rateFactor;
                 
                 resilience[c] = Probability::Beta::rv(&rng, alphaRes, betaRes);
                 
@@ -220,9 +225,9 @@ CharMatrix::CharMatrix(Tree* destTree, Tree* sourceTree, double** q, int ns, std
     std::vector<Node*> externalSourceNodes;
     
     //std::cout << "sourceNodes size (before): " << sourceNodes.size() << std::endl;
-    destTree->addSharingEvents(&rng, inSharingRate, internalSourceNodes, delta); // internal borrowing events
+    destTree->addSharingEvents(&rng, inSharingRate/subtreeLength, internalSourceNodes, delta); // internal borrowing events
     //std::cout << "sourceNodes size (after internal): " << sourceNodes.size() << std::endl;
-    destTree->addSharingEvents(&rng, sourceTree, exSharingRate, externalSourceNodes); // external borrowing events
+    destTree->addSharingEvents(&rng, sourceTree, exSharingRate/subtreeLength, externalSourceNodes); // external borrowing events
     //std::cout << "sourceNodes size (after external): " << sourceNodes.size() << std::endl;
 
     // simulate data
@@ -445,11 +450,16 @@ CharMatrix::CharMatrix(Tree* destTree, Tree* sourceTree, double** q, int ns, std
  
 CharMatrix::CharMatrix(Tree* t, double** q, int ns, std::vector<double> freqs, int nc, double alphaRat, double alphaRes, double betaRes, double sharingRate, double delta, bool borrowNearTips) {
         
+    
+    double expectedNumChanges = 2.0;
+    double subtreeLength = t->rescale();
+    double rateFactor = expectedNumChanges/subtreeLength;
+    
     RandomVariable& rng = RandomVariable::randomVariableInstance();
     
     // determine sharing events
     std::vector<Node*> sourceNodes;
-    t->addSharingEvents(&rng, sharingRate, sourceNodes, delta, borrowNearTips);
+    t->addSharingEvents(&rng, sharingRate/subtreeLength, sourceNodes, delta, borrowNearTips);
 
     // simulate data
     numStates = ns;
@@ -485,8 +495,8 @@ CharMatrix::CharMatrix(Tree* t, double** q, int ns, std::vector<double> freqs, i
             for (int c = 0; c < numChar; c++) {
                                                 
                 int currState = (*p->getAncestor()->getCognateSet())[c];
-                double len = p->getTime() - p->getAncestor()->getTime();
-                
+                double len = (p->getTime() - p->getAncestor()->getTime()) * rateFactor;
+
                 resilience[c] = Probability::Beta::rv(&rng, alphaRes, betaRes);
                 
                 if (alphaRat < 50.0)

@@ -586,7 +586,7 @@ void Tree::addSharingEvents(RandomVariable* rng, double rate, std::vector<Node*>
                                                 
                 if (v < len && x > y) {
                     
-                    std::cout << "v: " << v << ", x: " << x << ", y: " << y << std::endl;
+                    //std::cout << "v: " << v << ", x: " << x << ", y: " << y << std::endl;
                                         
                     Node* p = addNode();
                     p->setTime(v);
